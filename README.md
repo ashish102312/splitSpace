@@ -4,21 +4,25 @@ SplitSpace is a web application for personal and group expense management. It al
 
 ## Current Architecture
 
-The project is currently built with a foundational architecture separating the frontend (React) and a single backend service (`auth-service`) built with Django.
+The project is currently built with a microservices-based distributed system architecture:
+1. **Frontend**: React application built with Vite and Tailwind CSS.
+2. **API Gateway**: A central reverse proxy built with FastAPI that routes incoming frontend requests to the appropriate backend microservices.
+3. **Microservices**: Currently, only the `auth-service` (built with Django) is implemented.
 
-This is Phase 1 of a larger microservices-based distributed system. Currently, only the `auth-service` has been implemented as an independently runnable Django project. Other services will be added in later phases, including:
+Other services will be added in later phases, including:
 - Expense Service
 - Group Service
 - Analytics Service
 - Notification Service
 - Insight Service
 
-**Important**: These future services are NOT implemented yet. Only the foundational authentication system is active.
+**Important**: These future services are NOT implemented yet. Only the foundational authentication system and API gateway are active.
 
 ## Technology Stack
 
 - **Frontend**: React, Vite, Tailwind CSS, React Router
-- **Backend**: Python, Django, Django REST Framework
+- **API Gateway**: Python, FastAPI, Uvicorn, HTTPX
+- **Backend Services**: Python, Django, Django REST Framework
 - **Database**: MongoDB (via PyMongo)
 - **Authentication**: Custom JWT implementation (Access & Refresh tokens)
 
@@ -28,6 +32,9 @@ This is Phase 1 of a larger microservices-based distributed system. Currently, o
 splitSpace/
 ├── frontend/             # React application
 ├── backend/              # Backend services
+│   ├── api-gateway/      # FastAPI based central API Gateway
+│   │   ├── main.py
+│   │   └── requirements.txt
 │   ├── auth-service/     # Independent Django project for Authentication
 │   │   ├── config/       # Django core settings
 │   │   ├── authentication/ # Auth app (Views, Models via MongoDB, Utils)
@@ -48,7 +55,7 @@ You must have MongoDB running locally or accessible via a URI. By default, the a
 
 Create `.env` files in both frontend and backend directories.
 
-**Backend (`backend/auth-service/.env`):**
+**Backend Auth Service (`backend/auth-service/.env`):**
 ```
 MONGO_URI=mongodb://localhost:27017
 MONGO_DB_NAME=splitspace_auth
@@ -56,8 +63,9 @@ JWT_SECRET=supersecretjwtkey_replace_me_in_production
 ```
 
 **Frontend (`frontend/.env`):**
+*(Points to the API Gateway on port 8000)*
 ```
-VITE_API_BASE_URL=http://localhost:8001/api
+VITE_API_BASE_URL=http://localhost:8000/api
 ```
 
 ### 3. Install & Start Backend (auth-service)
@@ -72,8 +80,22 @@ pip install -r requirements.txt
 python manage.py runserver 8001
 ```
 
-### 4. Install & Start Frontend
+### 4. Install & Start API Gateway
 
+Open a new terminal window:
+```bash
+cd backend/api-gateway
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# Start the gateway on port 8000
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### 5. Install & Start Frontend
+
+Open a new terminal window:
 ```bash
 cd frontend
 npm install
@@ -84,7 +106,7 @@ npm run dev
 
 ## Available Authentication APIs
 
-The `auth-service` provides the following REST API endpoints:
+The API Gateway routes all requests starting with `/api/auth/` to the `auth-service`, which provides the following REST API endpoints:
 
 - `POST /api/auth/register/` - Register a new user
 - `POST /api/auth/login/` - Login and receive JWT tokens
