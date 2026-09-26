@@ -5,14 +5,12 @@ import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 
-// Helper component to redirect authenticated users away from public auth routes
 const PublicRoute = ({ children }) => {
   const { authenticated, loading } = useAuth();
-  
-  if (loading) return null; // or a loading spinner
-  
+  if (loading) return null;
   return authenticated ? <Navigate to="/dashboard" replace /> : children;
 };
 
@@ -27,6 +25,7 @@ function App() {
           
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           
           <Route path="*" element={<Navigate to="/" replace />} />

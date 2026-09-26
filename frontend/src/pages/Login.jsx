@@ -1,81 +1,77 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Loader2 } from 'lucide-react';
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const message = location.state?.message;
-
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
-    if (!formData.email || !formData.password) {
-      setError('Email and password are required.');
-      return;
-    }
-
     setLoading(true);
+
     try {
-      await login(formData.email, formData.password);
+      await login(email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid credentials.');
+      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden p-8">
-        <div className="text-center mb-8">
-          <Link to="/" className="text-3xl font-bold text-blue-600 tracking-tight">SplitSpace</Link>
-          <h2 className="text-2xl font-bold text-gray-900 mt-6">Welcome back</h2>
-        </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Sign in to your account
+        </h2>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Or{' '}
+          <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
+            create a new account
+          </Link>
+        </p>
+      </div>
 
-        {message && (
-          <div className="bg-green-50 text-green-700 p-4 rounded-lg mb-6 text-sm">
-            {message}
-          </div>
-        )}
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {error && (
+              <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm">
+                {error}
+              </div>
+            )}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Email address</label>
+              <div className="mt-1">
+                <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
 
-        {error && (
-          <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6 text-sm">
-            {error}
-          </div>
-        )}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Password</label>
+              <div className="mt-1">
+                <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+            </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none" 
-              placeholder="john@example.com" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none" 
-              placeholder="••••••••" />
-          </div>
-
-          <button type="submit" disabled={loading}
-            className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors flex justify-center items-center mt-2 disabled:opacity-70">
-            {loading ? <Loader2 className="animate-spin h-5 w-5" /> : 'Log In'}
-          </button>
-        </form>
-
-        <div className="mt-8 text-center text-sm text-gray-600">
-          Don't have an account? <Link to="/register" className="text-blue-600 font-bold hover:underline">Sign up</Link>
+            <div>
+              <button type="submit" disabled={loading}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50">
+                {loading ? 'Signing in...' : 'Sign in'}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
