@@ -1,5 +1,6 @@
 # pyrefly: ignore [missing-import]
 from rest_framework.authentication import BaseAuthentication
+# pyrefly: ignore [missing-import]
 from rest_framework.exceptions import AuthenticationFailed
 from .models import User
 from .utils import decode_token
