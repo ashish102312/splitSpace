@@ -25,6 +25,7 @@ app.add_middleware(
 
 # Service URLs
 AUTH_SERVICE_URL = os.getenv("AUTH_SERVICE_URL", "http://localhost:8001")
+GROUP_SERVICE_URL = os.getenv("GROUP_SERVICE_URL", "http://localhost:8002")
 
 # Global HTTP client
 client = httpx.AsyncClient()
@@ -70,6 +71,16 @@ async def forward_request(request: Request, service_url: str, path: str):
 async def auth_proxy(request: Request, path: str):
     """Forward auth requests to the Auth Service"""
     return await forward_request(request, AUTH_SERVICE_URL, f"api/auth/{path}")
+
+@app.api_route("/api/groups/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def group_proxy(request: Request, path: str):
+    """Forward group requests to the Group Service"""
+    return await forward_request(request, GROUP_SERVICE_URL, f"api/groups/{path}")
+
+@app.api_route("/api/expenses/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+async def expense_proxy(request: Request, path: str):
+    """Forward expense requests to the Group Service"""
+    return await forward_request(request, GROUP_SERVICE_URL, f"api/expenses/{path}")
 
 @app.get("/health")
 async def health_check():
