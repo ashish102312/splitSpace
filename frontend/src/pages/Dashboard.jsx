@@ -16,9 +16,9 @@ const Dashboard = () => {
           <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
             <Home className="w-5 h-5" /> Dashboard
           </Link>
-          <div className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium cursor-not-allowed opacity-70" title="Coming soon">
+          <Link to="/groups" className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium">
             <Users className="w-5 h-5" /> Groups
-          </div>
+          </Link>
           <div className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium cursor-not-allowed opacity-70" title="Coming soon">
             <CreditCard className="w-5 h-5" /> Expenses
           </div>
