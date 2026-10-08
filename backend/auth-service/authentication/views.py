@@ -90,6 +90,7 @@ class RefreshTokenView(APIView):
 
 class MeView(APIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         return success_response("User profile retrieved", data=request.user)
