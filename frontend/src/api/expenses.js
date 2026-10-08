@@ -5,13 +5,14 @@ export const getGroupExpenses = async (groupId) => {
   return response.data;
 };
 
-export const addExpense = async (groupId, description, totalAmount, paidBy, splits) => {
+export const addExpense = async (groupId, description, totalAmount, paidBy, splits, isSettlement = false) => {
   const response = await apiClient.post('/expenses/', {
     group_id: groupId,
     description,
     total_amount: totalAmount,
     paid_by: paidBy,
-    splits
+    splits,
+    is_settlement: isSettlement
   });
   return response.data;
 };
