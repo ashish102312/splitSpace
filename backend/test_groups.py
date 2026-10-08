@@ -34,6 +34,10 @@ def add_expense(token, group_id, desc, total, paid_by, splits):
     }, headers={"Authorization": f"Bearer {token}"})
     return res.json()
 
+def get_balances(token, group_id):
+    res = requests.get(f"{BASE_URL}/groups/{group_id}/balances", headers={"Authorization": f"Bearer {token}"})
+    return res.json()
+
 print("Registering users...")
 id = str(uuid.uuid4())[:6]
 u1 = f"alice_{id}@test.com"
@@ -74,4 +78,8 @@ expense = add_expense(t1, group["id"], "Dinner", 90.0, u1_id, [
     {"user_id": u3_id, "amount": 30.0}
 ])
 print(expense)
+
+print("\nFetching balances...")
+bals = get_balances(t1, group["id"])
+print(bals)
 
