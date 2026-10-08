@@ -97,6 +97,7 @@ class MeView(APIView):
 
 class UpdateProfileView(APIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     
     def put(self, request):
         name = request.data.get('name')
@@ -110,6 +111,7 @@ class UpdateProfileView(APIView):
 
 class ChangePasswordView(APIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     
     def post(self, request):
         current_password = request.data.get('currentPassword')
