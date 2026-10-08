@@ -83,3 +83,17 @@ print("\nFetching balances...")
 bals = get_balances(t1, group["id"])
 print(bals)
 
+print("\nBob settles up with Alice ($30)...")
+settlement = add_expense(
+    t2, # Bob's token
+    group["id"],
+    "Settlement",
+    30.0,
+    u2_id, # Bob paid
+    [{"user_id": u1_id, "amount": 30.0, "paid": False}] # Alice is credited
+)
+
+print("\nFetching balances again...")
+bals2 = get_balances(t1, group["id"])
+print(bals2)
+
