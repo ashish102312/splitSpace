@@ -94,6 +94,7 @@ splitSpace/
 │   │   ├── models.py             # Pydantic schemas (Groups, Expenses, Splits)
 │   │   ├── main.py               # FastAPI entrypoint
 │   │   └── requirements.txt
+│   ├── init_db.py                # Database & collection initialization script
 │   └── test_groups.py            # Integration test script for groups & settlements
 ├── .gitignore
 └── README.md
@@ -142,7 +143,24 @@ VITE_API_BASE_URL=http://localhost:8000/api
 
 ---
 
-### 3. Run Backend Services
+### 3. Initialize MongoDB Collections & Indexes (Recommended)
+
+Before running the microservices, you can initialize the collections and unique indexes for `splitspace_auth` and `splitspace_groups`:
+
+```bash
+cd backend/auth-service
+source venv/bin/activate
+python ../init_db.py
+```
+
+This ensures:
+- `splitspace_auth.users`: Unique indexes on `email` and `id`
+- `splitspace_groups.groups`: Unique indexes on `code` and `id`, and index on `members.user_id`
+- `splitspace_groups.expenses`: Unique index on `id`, and index on `group_id`
+
+---
+
+### 4. Run Backend Services
 
 Open separate terminal tabs for each service:
 
@@ -175,7 +193,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 ---
 
-### 4. Run Frontend (Port 5173)
+### 5. Run Frontend (Port 5173)
 
 #### **Tab 4: Frontend**
 ```bash
@@ -188,7 +206,7 @@ Visit the app at **http://localhost:5173**.
 
 ---
 
-### 5. (Optional) Run Integration Verification Script
+### 6. (Optional) Run Integration Verification Script
 
 You can verify end-to-end functionality across Auth, Gateway, and Group Service using the built-in test script:
 
