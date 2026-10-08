@@ -1,46 +1,100 @@
 # SplitSpace
 
-SplitSpace is a web application for personal and group expense management. It allows users to track their own spending and share costs with friends, family, or roommates without the headache.
+SplitSpace is a modern web application for personal and group expense management. It allows users to track their personal spending, organize group activities, split costs seamlessly with friends, family, or roommates, and calculate optimal debt settlements without the headache.
 
-## Current Architecture
+---
 
-The project is currently built with a microservices-based distributed system architecture:
-1. **Frontend**: React application built with Vite and Tailwind CSS.
-2. **API Gateway**: A central reverse proxy built with FastAPI that routes incoming frontend requests to the appropriate backend microservices.
-3. **Microservices**: Currently, only the `auth-service` (built with Django) is implemented.
+## 🏛️ System Architecture
 
-Other services will be added in later phases, including:
-- Expense Service
-- Group Service
-- Analytics Service
-- Notification Service
-- Insight Service
+SplitSpace is engineered with a **microservices-based distributed architecture**, ensuring independent scalability, separation of concerns, and clean service boundaries:
 
-**Important**: These future services are NOT implemented yet. Only the foundational authentication system and API gateway are active.
+```
+                      ┌─────────────────────────┐
+                      │  Frontend (React/Vite)  │
+                      │  http://localhost:5173  │
+                      └────────────┬────────────┘
+                                   │ HTTP / JSON
+                                   ▼
+                      ┌─────────────────────────┐
+                      │   FastAPI API Gateway   │
+                      │  http://localhost:8000  │
+                      └─────┬──────────────┬────┘
+                            │              │
+         /api/auth/*        │              │  /api/groups/* & /api/expenses/*
+         Proxy Traffic      │              │  Proxy Traffic
+                            ▼              ▼
+       ┌────────────────────────┐      ┌────────────────────────┐
+       │   Auth Microservice    │      │   Group Microservice   │
+       │     Django / DRF       │      │     FastAPI (Async)    │
+       │ http://localhost:8001  │      │ http://localhost:8002  │
+       └───────────┬────────────┘      └───────────┬────────────┘
+                   │                               │
+                   ▼                               ▼
+       ┌────────────────────────┐      ┌────────────────────────┐
+       │     MongoDB Database   │      │     MongoDB Database   │
+       │    (splitspace_auth)   │      │   (splitspace_groups)  │
+       └────────────────────────┘      └────────────────────────┘
+```
 
-## Technology Stack
+### Active Components:
+1. **Frontend**: React application built with Vite and Tailwind CSS providing reactive dashboards, group overviews, detailed expense tracking, and debt settlement interfaces.
+2. **API Gateway**: Central reverse proxy built with FastAPI and HTTPX. Handles client request routing, CORS headers, and service multiplexing on port `8000`.
+3. **Auth Service**: Django REST Framework service on port `8001` managing user registration, authentication, JWT tokens (access + refresh), and user profile state.
+4. **Group Service**: Async FastAPI microservice on port `8002` managing group lifecycles (creation, 6-character unique invite codes, joining), group expenses, member splits, and real-time net balance & debt settlement calculations.
 
-- **Frontend**: React, Vite, Tailwind CSS, React Router
-- **API Gateway**: Python, FastAPI, Uvicorn, HTTPX
-- **Backend Services**: Python, Django, Django REST Framework
-- **Database**: MongoDB (via PyMongo)
-- **Authentication**: Custom JWT implementation (Access & Refresh tokens)
+### Future Planned Microservices:
+- **Analytics Service**: Spending trends, category breakdown, and monthly budget forecasts.
+- **Notification Service**: Activity alerts, settlement reminders, and invites.
+- **Insight Service**: AI-assisted spending recommendations and anomalies.
 
-## Folder Structure
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React 18, Vite, Tailwind CSS, Lucide React, Axios, React Router |
+| **API Gateway** | Python 3.10+, FastAPI, Uvicorn, HTTPX |
+| **Auth Microservice** | Python, Django 4.x, Django REST Framework, PyMongo, PyJWT |
+| **Group Microservice** | Python, FastAPI, Motor (Async MongoDB), Pydantic v2, PyJWT |
+| **Database** | MongoDB (dedicated collections / databases per service) |
+| **Security & Auth** | Shared secret JWT verification (HS256 Bearer tokens) |
+
+---
+
+## 📂 Project Structure
 
 ```
 splitSpace/
-├── frontend/             # React application
-├── backend/              # Backend services
-│   ├── api-gateway/      # FastAPI based central API Gateway
-│   │   ├── main.py
+├── frontend/                     # React Single Page Application (Vite + Tailwind)
+│   ├── src/
+│   │   ├── api/                  # API client modules (auth, groups, expenses)
+│   │   ├── components/           # Navbar, Layouts, UI widgets
+│   │   ├── context/              # AuthContext & global state providers
+│   │   ├── pages/                # Landing, Login, Register, Dashboard, Groups, GroupDetails, Profile
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   ├── package.json
+│   └── vite.config.js
+├── backend/                      # Backend microservices & utilities
+│   ├── api-gateway/              # Central FastAPI reverse proxy (port 8000)
+│   │   ├── main.py               # Route proxies for /api/auth, /api/groups, /api/expenses
 │   │   └── requirements.txt
-│   ├── auth-service/     # Independent Django project for Authentication
-│   │   ├── config/       # Django core settings
-│   │   ├── authentication/ # Auth app (Views, Models via MongoDB, Utils)
-│   │   ├── venv/         # Python virtual environment
+│   ├── auth-service/             # Django authentication microservice (port 8001)
+│   │   ├── authentication/       # Auth views, models, and MongoDB helpers
+│   │   ├── config/               # Django project settings & root URLs
 │   │   ├── manage.py
 │   │   └── requirements.txt
+│   ├── group-service/            # FastAPI group & expense microservice (port 8002)
+│   │   ├── routers/
+│   │   │   ├── group.py          # Group CRUD, invite codes, balances & settlements
+│   │   │   └── expense.py        # Group expense creation & expense history
+│   │   ├── database.py           # Motor async MongoDB connector
+│   │   ├── dependencies.py       # JWT authentication & user extraction
+│   │   ├── models.py             # Pydantic schemas (Groups, Expenses, Splits)
+│   │   ├── main.py               # FastAPI entrypoint
+│   │   └── requirements.txt
+│   └── test_groups.py            # Integration test script for groups & settlements
 ├── .gitignore
 └── README.md
 ```
@@ -115,3 +169,4 @@ The API Gateway routes all requests starting with `/api/auth/` to the `auth-serv
 - `PUT /api/auth/profile/` - Update the user's name
 - `POST /api/auth/change-password/` - Change the user's password
 - `POST /api/auth/logout/` - Logout the user
+
