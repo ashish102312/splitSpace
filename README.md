@@ -4,7 +4,7 @@ SplitSpace is a modern web application for personal and group expense management
 
 ---
 
-## 🏛️ System Architecture
+## System Architecture
 
 SplitSpace is engineered with a **microservices-based distributed architecture**, ensuring independent scalability, separation of concerns, and clean service boundaries:
 
@@ -21,7 +21,7 @@ SplitSpace is engineered with a **microservices-based distributed architecture**
                       └─────┬──────────────┬────┘
                             │              │
          /api/auth/*        │              │  /api/groups/* & /api/expenses/*
-         Proxy Traffic      │              │  Proxy Traffic
+         Proxy Traffic       │              │  Proxy Traffic
                             ▼              ▼
        ┌────────────────────────┐      ┌────────────────────────┐
        │   Auth Microservice    │      │   Group Microservice   │
@@ -102,7 +102,7 @@ splitSpace/
 
 ---
 
-## 🚀 Setup & Installation
+##  Setup & Installation
 
 ### 1. Prerequisites
 - **Python 3.10+**
@@ -111,39 +111,8 @@ splitSpace/
 
 ---
 
-### 2. Configure Environment Variables
 
-Create `.env` configuration files for the services:
-
-#### **Auth Service (`backend/auth-service/.env`):**
-```env
-MONGO_URI=mongodb://localhost:27017
-MONGO_DB_NAME=splitspace_auth
-JWT_SECRET=supersecretjwtkey_replace_me_in_production
-```
-
-#### **Group Service (`backend/group-service/.env`):**
-```env
-MONGO_URI=mongodb://localhost:27017
-MONGO_DB_NAME=splitspace_groups
-JWT_SECRET=supersecretjwtkey_replace_me_in_production
-PORT=8002
-```
-
-#### **API Gateway (`backend/api-gateway/.env`):** *(Optional, defaults configured)*
-```env
-AUTH_SERVICE_URL=http://localhost:8001
-GROUP_SERVICE_URL=http://localhost:8002
-```
-
-#### **Frontend (`frontend/.env`):**
-```env
-VITE_API_BASE_URL=http://localhost:8000/api
-```
-
----
-
-### 3. Initialize MongoDB Collections & Indexes (Recommended)
+### 2. Initialize MongoDB Collections & Indexes (Recommended)
 
 Before running the microservices, you can initialize the collections and unique indexes for `splitspace_auth` and `splitspace_groups`:
 
@@ -160,7 +129,7 @@ This ensures:
 
 ---
 
-### 4. Run Backend Services
+### 3. Run Backend Services
 
 Open separate terminal tabs for each service:
 
@@ -193,7 +162,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 ---
 
-### 5. Run Frontend (Port 5173)
+### 4. Run Frontend (Port 5173)
 
 #### **Tab 4: Frontend**
 ```bash
@@ -225,7 +194,7 @@ This test:
 
 ---
 
-## 📡 API Endpoints Reference
+##  API Endpoints Reference
 
 All requests from the frontend route through the API Gateway at `http://localhost:8000/api`.
 
@@ -241,12 +210,12 @@ All requests from the frontend route through the API Gateway at `http://localhos
 | `POST` | `/api/auth/change-password/` | Change password | Bearer Token |
 | `POST` | `/api/auth/logout/` | Revoke tokens & logout | Bearer Token |
 
-#### 🔒 Authentication Security & Flow
+####  Authentication Security & Flow
 - **Token Pairing**: Generates short-lived access tokens and refresh tokens upon login/registration.
 - **Challenge Responses**: Employs standard HTTP `Bearer` challenge headers returning clean `401 Unauthorized` responses on missing or expired tokens, triggering client-side automatic token renewal.
 - **Endpoint Protection**: Protected routes (`/me/`, `/profile/`, `/change-password/`, `/logout/`) enforce Django REST Framework `IsAuthenticated` permission classes.
 
-### 👥 Group Service (`/api/groups/*`)
+###  Group Service (`/api/groups/*`)
 
 | Method | Endpoint | Description | Auth Required |
 |---|---|---|---|
@@ -256,7 +225,7 @@ All requests from the frontend route through the API Gateway at `http://localhos
 | `POST` | `/api/groups/join` | Join an existing group using a 6-character code | Bearer Token |
 | `GET` | `/api/groups/{group_id}/balances` | Calculate net balances and optimal settlement transactions | Bearer Token |
 
-### 💸 Expense Management (`/api/expenses/*`)
+###  Expense Management (`/api/expenses/*`)
 
 | Method | Endpoint | Description | Auth Required |
 |---|---|---|---|
@@ -265,7 +234,7 @@ All requests from the frontend route through the API Gateway at `http://localhos
 
 ---
 
-## 💡 Key Features of the Group Service
+##  Key Features of the Group Service
 
 - **Unique Invite Codes**: Automatically generates random 6-character alphanumeric codes for friction-free group sharing.
 - **Role-Based Membership**: Group creators are assigned the `admin` role, and joining members receive the `member` role.
