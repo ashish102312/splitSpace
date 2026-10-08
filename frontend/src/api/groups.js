@@ -19,3 +19,8 @@ export const joinGroup = async (code) => {
   const response = await apiClient.post('/groups/join', { code });
   return response.data;
 };
+
+export const getGroupBalances = async (groupId) => {
+  const response = await apiClient.get(`/groups/${groupId}/balances`);
+  return response.data;
+};
