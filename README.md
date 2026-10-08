@@ -241,6 +241,11 @@ All requests from the frontend route through the API Gateway at `http://localhos
 | `POST` | `/api/auth/change-password/` | Change password | Bearer Token |
 | `POST` | `/api/auth/logout/` | Revoke tokens & logout | Bearer Token |
 
+#### 🔒 Authentication Security & Flow
+- **Token Pairing**: Generates short-lived access tokens and refresh tokens upon login/registration.
+- **Challenge Responses**: Employs standard HTTP `Bearer` challenge headers returning clean `401 Unauthorized` responses on missing or expired tokens, triggering client-side automatic token renewal.
+- **Endpoint Protection**: Protected routes (`/me/`, `/profile/`, `/change-password/`, `/logout/`) enforce Django REST Framework `IsAuthenticated` permission classes.
+
 ### 👥 Group Service (`/api/groups/*`)
 
 | Method | Endpoint | Description | Auth Required |
