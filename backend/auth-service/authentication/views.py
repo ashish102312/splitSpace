@@ -135,6 +135,7 @@ class ChangePasswordView(APIView):
 
 class LogoutView(APIView):
     authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         # We can implement token blacklisting here in the future
