@@ -1,4 +1,9 @@
-{"python.defaultInterpreterPath": "backend/auth-service/venv/bin/python",
+{
+    "python.defaultInterpreterPath": "backend/auth-service/venv/bin/python",
+    "python.analysis.extraPaths": [
+        "backend/api-gateway/venv/lib/python3.14/site-packages",
+        "backend/group-service/venv/lib/python3.14/site-packages"
+    ],
     "python.linting.mypyEnabled": true,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": false,
