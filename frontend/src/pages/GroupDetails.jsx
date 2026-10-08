@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getGroupDetails } from '../api/groups';
+import { getGroupDetails, getGroupBalances } from '../api/groups';
 import { getGroupExpenses, addExpense } from '../api/expenses';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, Home, Users, PieChart, CreditCard, User, ChevronLeft } from 'lucide-react';
@@ -11,8 +11,11 @@ const GroupDetails = () => {
   
   const [group, setGroup] = useState(null);
   const [expenses, setExpenses] = useState([]);
+  const [balancesData, setBalancesData] = useState(null);
   const [loading, setLoading] = useState(true);
   
+  const [activeTab, setActiveTab] = useState('expenses'); // 'expenses' or 'balances'
+
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [desc, setDesc] = useState('');
   const [amount, setAmount] = useState('');
@@ -29,6 +32,9 @@ const GroupDetails = () => {
       
       const expData = await getGroupExpenses(id);
       setExpenses(expData);
+
+      const balData = await getGroupBalances(id);
+      setBalancesData(balData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -64,6 +70,25 @@ const GroupDetails = () => {
       fetchData();
     } catch (err) {
       alert('Failed to add expense');
+    }
+  };
+
+  const handleSettle = async (debt) => {
+    try {
+      // Debtor pays the Creditor. 
+      // paid_by = debtor (debt.from_user)
+      // splits = [{user_id: creditor, amount: debt.amount}]
+      await addExpense(
+        id,
+        "Settlement",
+        debt.amount,
+        debt.from_user,
+        [{ user_id: debt.to_user, amount: debt.amount, paid: false }],
+        true // isSettlement
+      );
+      fetchData();
+    } catch (err) {
+      alert('Failed to settle up');
     }
   };
 
@@ -121,7 +146,7 @@ const GroupDetails = () => {
               <div className="p-12 text-center text-red-500">Group not found</div>
             ) : (
               <>
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-8 flex justify-between items-start">
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-6 flex justify-between items-start">
                   <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">{group.name}</h1>
                     {group.description && <p className="text-gray-500 mb-4">{group.description}</p>}
@@ -137,7 +162,23 @@ const GroupDetails = () => {
                   </button>
                 </div>
 
-                {showAddExpense && (
+                {/* Tabs */}
+                <div className="flex space-x-4 mb-6 border-b border-gray-200 pb-2">
+                  <button 
+                    onClick={() => setActiveTab('expenses')}
+                    className={`font-medium pb-2 px-1 ${activeTab === 'expenses' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                  >
+                    Expenses
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('balances')}
+                    className={`font-medium pb-2 px-1 ${activeTab === 'balances' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+                  >
+                    Balances
+                  </button>
+                </div>
+
+                {showAddExpense && activeTab === 'expenses' && (
                   <form onSubmit={handleAddExpense} className="mb-8 p-6 bg-white rounded-2xl shadow-sm border border-gray-200">
                     <h2 className="text-xl font-bold mb-4 text-gray-900">Add an Expense</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -167,34 +208,47 @@ const GroupDetails = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                   <div className="lg:col-span-2 space-y-4">
-                    <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Expenses</h2>
-                    {expenses.length === 0 ? (
-                      <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
-                        <p className="text-gray-500 font-medium">No expenses added yet.</p>
-                      </div>
-                    ) : (
-                      expenses.slice().reverse().map(exp => (
-                        <div key={exp.id} className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex justify-between items-center hover:border-blue-200 transition-colors">
-                          <div className="flex items-center space-x-4">
-                            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center font-bold text-xl border border-blue-100">
-                              {exp.description.charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                              <h3 className="font-bold text-gray-900 text-lg">{exp.description}</h3>
-                              <p className="text-sm font-medium text-gray-500">
-                                Paid by {exp.paid_by === user.id ? 'You' : exp.paid_by.substring(0,8)+'...'}
-                              </p>
-                            </div>
+                    
+                    {activeTab === 'expenses' && (
+                      <>
+                        <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Expenses</h2>
+                        {expenses.length === 0 ? (
+                          <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
+                            <p className="text-gray-500 font-medium">No expenses added yet.</p>
                           </div>
-                          <div className="text-right">
-                            <p className="font-bold text-gray-900 text-xl">${exp.total_amount.toFixed(2)}</p>
-                            <p className="text-sm font-medium text-gray-400">
-                              {new Date(exp.created_at).toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-                      ))
+                        ) : (
+                          expenses.slice().reverse().map(exp => (
+                            <div key={exp.id} className={`p-5 rounded-2xl shadow-sm flex justify-between items-center transition-colors border ${exp.is_settlement ? 'bg-green-50 border-green-100' : 'bg-white border-gray-200 hover:border-blue-200'}`}>
+                              <div className="flex items-center space-x-4">
+                                <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl border ${exp.is_settlement ? 'bg-green-100 text-green-700 border-green-200' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
+                                  {exp.is_settlement ? '✓' : exp.description.charAt(0).toUpperCase()}
+                                </div>
+                                <div>
+                                  <h3 className={`font-bold text-lg ${exp.is_settlement ? 'text-green-800' : 'text-gray-900'}`}>{exp.description}</h3>
+                                  <p className="text-sm font-medium text-gray-500">
+                                    {exp.is_settlement ? 'Settlement by' : 'Paid by'} {exp.paid_by === user.id ? 'You' : exp.paid_by.substring(0,8)+'...'}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <p className={`font-bold text-xl ${exp.is_settlement ? 'text-green-600' : 'text-gray-900'}`}>${exp.total_amount.toFixed(2)}</p>
+                                <p className="text-sm font-medium text-gray-400">
+                                  {new Date(exp.created_at).toLocaleDateString()}
+                                </p>
+                              </div>
+                            </div>
+                          ))
+                        )}
+                      </>
                     )}
+
+                    {activeTab === 'balances' && balancesData && (
+                      <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                        <h2 className="text-xl font-bold text-gray-900 mb-2">Group Balances</h2>
+                        <p className="text-gray-500">View real-time balances and suggested debt settlements.</p>
+                      </div>
+                    )}
+
                   </div>
 
                   <div>
