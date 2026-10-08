@@ -5,6 +5,11 @@ from rest_framework.exceptions import AuthenticationFailed
 from .models import User
 from .utils import decode_token
 
+class AuthenticatedUser(dict):
+    @property
+    def is_authenticated(self):
+        return True
+
 class JWTAuthentication(BaseAuthentication):
     def authenticate(self, request):
         auth_header = request.headers.get('Authorization')
