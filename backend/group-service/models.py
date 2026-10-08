@@ -35,6 +35,7 @@ class ExpenseCreate(BaseModel):
     total_amount: float
     paid_by: str
     splits: List[Split]
+    is_settlement: bool = False
 
 class ExpenseResponse(ExpenseCreate):
     id: str
