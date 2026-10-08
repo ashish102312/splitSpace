@@ -85,3 +85,45 @@ async def join_group(req: JoinGroupRequest, user_id: str = Depends(get_current_u
     group = await db.groups.find_one({"id": group["id"]})
     group.pop("_id", None)
     return group
+
+@router.get("/{group_id}/balances")
+async def get_group_balances(group_id: str, user_id: str = Depends(get_current_user)):
+    db = get_db()
+    group = await db.groups.find_one({"id": group_id})
+    if not group:
+        raise HTTPException(status_code=404, detail="Group not found")
+        
+    if not any(m["user_id"] == user_id for m in group["members"]):
+        raise HTTPException(status_code=403, detail="Not a member of this group")
+        
+    # Calculate net balances
+    balances = {m["user_id"]: 0.0 for m in group["members"]}
+    
+    cursor = db.expenses.find({"group_id": group_id})
+    expenses = await cursor.to_list(length=None)
+    
+    for exp in expenses:
+        payer = exp["paid_by"]
+        if payer in balances:
+            balances[payer] += exp["total_amount"]
+        
+        for split in exp["splits"]:
+            split_user = split["user_id"]
+            if split_user in balances:
+                balances[split_user] -= split["amount"]
+                
+    # Format balances into debts (who owes whom)
+    # Positive balance means they are owed money. Negative means they owe money.
+    debtors = []
+    creditors = []
+    
+    for uid, bal in balances.items():
+        if bal < -0.01:
+            debtors.append({"user_id": uid, "amount": -bal})
+        elif bal > 0.01:
+            creditors.append({"user_id": uid, "amount": bal})
+            
+    return {
+        "balances": balances
+    }
+
