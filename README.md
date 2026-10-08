@@ -275,7 +275,4 @@ All requests from the frontend route through the API Gateway at `http://localhos
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License.
 
