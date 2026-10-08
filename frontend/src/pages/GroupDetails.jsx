@@ -243,10 +243,53 @@ const GroupDetails = () => {
                     )}
 
                     {activeTab === 'balances' && balancesData && (
-                      <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                        <h2 className="text-xl font-bold text-gray-900 mb-2">Group Balances</h2>
-                        <p className="text-gray-500">View real-time balances and suggested debt settlements.</p>
-                      </div>
+                      <>
+                        <h2 className="text-xl font-bold text-gray-900 mb-4">Suggested Settlements</h2>
+                        {balancesData.debts.length === 0 ? (
+                          <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
+                            <p className="text-gray-500 font-medium">All settled up! No one owes anything.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-3">
+                            {balancesData.debts.map((debt, idx) => (
+                              <div key={idx} className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex justify-between items-center">
+                                <div>
+                                  <span className="font-bold text-gray-900">
+                                    {debt.from_user === user.id ? 'You' : debt.from_user.substring(0,8)+'...'}
+                                  </span>
+                                  <span className="text-gray-500 mx-2">owes</span>
+                                  <span className="font-bold text-gray-900">
+                                    {debt.to_user === user.id ? 'You' : debt.to_user.substring(0,8)+'...'}
+                                  </span>
+                                  <div className="font-bold text-2xl text-red-500 mt-1">
+                                    ${debt.amount.toFixed(2)}
+                                  </div>
+                                </div>
+                                <button 
+                                  onClick={() => handleSettle(debt)}
+                                  className="px-4 py-2 bg-green-100 text-green-700 font-bold rounded-xl hover:bg-green-200 transition-colors"
+                                >
+                                  Record Settlement
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        
+                        <h2 className="text-xl font-bold text-gray-900 mb-4 mt-8">Individual Balances</h2>
+                        <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                          {Object.entries(balancesData.balances).map(([uid, bal]) => (
+                            <div key={uid} className="p-4 border-b border-gray-100 flex justify-between items-center last:border-0">
+                              <span className="font-medium text-gray-800">
+                                {uid === user.id ? 'You' : uid.substring(0,8)+'...'}
+                              </span>
+                              <span className={`font-bold ${bal > 0.01 ? 'text-green-500' : bal < -0.01 ? 'text-red-500' : 'text-gray-400'}`}>
+                                {bal > 0.01 ? '+' : ''}{bal.toFixed(2)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </>
                     )}
 
                   </div>
