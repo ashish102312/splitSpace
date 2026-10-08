@@ -28,7 +28,7 @@ class JWTAuthentication(BaseAuthentication):
 
         # Remove password from request.user
         user_data.pop('password', None)
-        return (user_data, token)
+        return (AuthenticatedUser(user_data), token)
 
     def authenticate_header(self, request):
         return 'Bearer'
