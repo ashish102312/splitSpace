@@ -123,7 +123,34 @@ async def get_group_balances(group_id: str, user_id: str = Depends(get_current_u
         elif bal > 0.01:
             creditors.append({"user_id": uid, "amount": bal})
             
+    debtors.sort(key=lambda x: x["amount"], reverse=True)
+    creditors.sort(key=lambda x: x["amount"], reverse=True)
+    
+    debts = []
+    i, j = 0, 0
+    
+    while i < len(debtors) and j < len(creditors):
+        debtor = debtors[i]
+        creditor = creditors[j]
+        
+        settle_amount = min(debtor["amount"], creditor["amount"])
+        
+        debts.append({
+            "from_user": debtor["user_id"],
+            "to_user": creditor["user_id"],
+            "amount": round(settle_amount, 2)
+        })
+        
+        debtor["amount"] -= settle_amount
+        creditor["amount"] -= settle_amount
+        
+        if debtor["amount"] < 0.01:
+            i += 1
+        if creditor["amount"] < 0.01:
+            j += 1
+            
     return {
-        "balances": balances
+        "balances": balances,
+        "debts": debts
     }
 
