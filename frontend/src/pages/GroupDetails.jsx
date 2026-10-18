@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { getGroupDetails, getGroupBalances } from '../api/groups';
 import { getGroupExpenses, addExpense } from '../api/expenses';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, Home, Users, PieChart, CreditCard, User, ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
+import Sidebar from '../components/Sidebar';
 
 const GroupDetails = () => {
   const { id } = useParams();
@@ -94,34 +95,7 @@ const GroupDetails = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
-      {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
-        <div className="p-6">
-          <div className="text-2xl font-bold text-blue-600 tracking-tight">SplitSpace</div>
-        </div>
-        <nav className="flex-1 px-4 space-y-2 mt-4">
-          <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium">
-            <Home className="w-5 h-5" /> Dashboard
-          </Link>
-          <Link to="/groups" className="flex items-center gap-3 px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium">
-            <Users className="w-5 h-5" /> Groups
-          </Link>
-          <div className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium cursor-not-allowed opacity-70" title="Coming soon">
-            <CreditCard className="w-5 h-5" /> Expenses
-          </div>
-          <div className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium cursor-not-allowed opacity-70" title="Coming soon">
-            <PieChart className="w-5 h-5" /> Analytics
-          </div>
-          <Link to="/profile" className="flex items-center gap-3 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg font-medium">
-            <User className="w-5 h-5" /> Profile
-          </Link>
-        </nav>
-        <div className="p-4 border-t border-gray-200">
-          <button onClick={logout} className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg font-medium w-full transition-colors">
-            <LogOut className="w-5 h-5" /> Logout
-          </button>
-        </div>
-      </div>
+      <Sidebar />
 
       <div className="flex-1 flex flex-col h-screen overflow-hidden">
         <header className="bg-white border-b border-gray-200 p-4 flex justify-between items-center md:hidden">
