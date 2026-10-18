@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Groups from './pages/Groups';
 import GroupDetails from './pages/GroupDetails';
+import Expenses from './pages/Expenses';
+import Analytics from './pages/Analytics';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const PublicRoute = ({ children }) => {
@@ -30,6 +32,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/groups/:id" element={<GroupDetails />} />
+            <Route path="/expenses" element={<Expenses />} />
+            <Route path="/analytics" element={<Analytics />} />
           </Route>
           
           <Route path="*" element={<Navigate to="/" replace />} />
