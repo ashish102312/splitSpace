@@ -1,17 +1,74 @@
-# General
+# Dependencies
 node_modules/
+*/node_modules/
+
+# Production Builds
 dist/
+dist-ssr/
 build/
+*.local
+
+# Environment Variables & Secrets
 .env
-.DS_Store
+.env.*
+!.env.example
+*.env
 
-# Python/Django
+# Python Virtual Environments & Caches
 venv/
+.venv/
+*/venv/
+env/
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-db.sqlite3
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Logs
+# Django
+db.sqlite3
+db.sqlite3-journal
+media/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Temporary Files
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.commit_padding.txt
+
+# Operating System & Editor Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+* 2.*
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
