@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  frontend:
+    name: Frontend Build Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Production Bundle
+        run: npm run build
+
+  backend:
+    name: Backend Integration Tests
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/auth-service/requirements.txt
+          pip install -r backend/group-service/requirements.txt
+          pip install -r backend/expense-service/requirements.txt
+          pip install -r backend/api-gateway/requirements.txt
+          pip install requests httpx pytest
+
+      - name: Initialize MongoDB Databases & Indexes
+        env:
+          MONGO_URI: mongodb://localhost:27017
+        run: python backend/init_db.py
+
+      - name: Start Services in Background
+        env:
+          MONGO_URI: mongodb://localhost:27017
+          JWT_SECRET: supersecretjwtkey_replace_me_in_production
+        run: |
+          python backend/auth-service/manage.py runserver 8001 &
+          uvicorn main:app --port 8002 --app-dir backend/group-service &
+          uvicorn main:app --port 8003 --app-dir backend/expense-service &
+          uvicorn main:app --port 8000 --app-dir backend/api-gateway &
+          sleep 5
+
+      - name: Run Test Suites
+        run: |
+          python backend/test_groups.py
+          python backend/test_personal_expenses.py
