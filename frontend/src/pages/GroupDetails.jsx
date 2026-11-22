@@ -104,8 +104,9 @@ const GroupDetails = () => {
   };
 
   const copyInvite = () => {
-    if (group?.invite_code) {
-      navigator.clipboard.writeText(group.invite_code);
+    const inviteCode = group?.code || group?.invite_code;
+    if (inviteCode) {
+      navigator.clipboard.writeText(inviteCode);
       setCopiedCode(true);
       setTimeout(() => setCopiedCode(false), 2000);
     }
@@ -206,7 +207,7 @@ const GroupDetails = () => {
                     ) : (
                       <>
                         <Copy className="w-3 h-3 text-slate-500" />
-                        <span>Code: <strong>{group.invite_code}</strong></span>
+                        <span>Code: <strong>{group.code || group.invite_code || 'N/A'}</strong></span>
                       </>
                     )}
                   </button>
@@ -317,7 +318,7 @@ const GroupDetails = () => {
                         <p className={`text-base font-extrabold ${
                           exp.is_settlement ? 'text-emerald-700' : 'text-slate-900'
                         }`}>
-                          ${Number(exp.total_amount).toFixed(2)}
+                          ₹{Number(exp.total_amount).toFixed(2)}
                         </p>
                         <p className="text-[11px] text-slate-400 mt-0.5">
                           {new Date(exp.created_at).toLocaleDateString()}
@@ -358,15 +359,15 @@ const GroupDetails = () => {
                           <div className="text-right">
                             {val > 0.01 ? (
                               <span className="text-sm font-bold text-emerald-600">
-                                +${val.toFixed(2)} (gets back)
+                                +₹{val.toFixed(2)} (gets back)
                               </span>
                             ) : val < -0.01 ? (
                               <span className="text-sm font-bold text-rose-600">
-                                -${Math.abs(val).toFixed(2)} (owes)
+                                -₹{Math.abs(val).toFixed(2)} (owes)
                               </span>
                             ) : (
                               <span className="text-sm font-medium text-slate-400">
-                                Settled ($0.00)
+                                Settled (₹0.00)
                               </span>
                             )}
                           </div>
@@ -409,7 +410,7 @@ const GroupDetails = () => {
                                 {memberMap[s.from_user] || s.from_user.substring(0, 8)}
                               </span>
                               <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 text-xs font-bold">
-                                owes ${Number(s.amount).toFixed(2)}
+                                owes ₹{Number(s.amount).toFixed(2)}
                                 <ArrowRight className="w-3 h-3 text-emerald-700" />
                               </div>
                               <span className="font-semibold text-sm text-slate-800">
@@ -470,7 +471,7 @@ const GroupDetails = () => {
 
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                  Total Amount ($)
+                  Total Amount (₹)
                 </label>
                 <input
                   type="number"
