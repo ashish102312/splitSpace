@@ -791,7 +791,7 @@ const Landing = () => {
                       <input
                         type="text"
                         required
-                        placeholder="your name"
+                        placeholder="your_NAME"
                         value={bookingData.name}
                         onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
                         className="w-full px-4 py-3 bg-[#F1F5F8] rounded-[10px] text-xs text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-[#1473E6]"
@@ -805,7 +805,7 @@ const Landing = () => {
                       <input
                         type="email"
                         required
-                        placeholder="Your_Email@organization.com"
+                        placeholder="your_EMAIL"
                         value={bookingData.email}
                         onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
                         className="w-full px-4 py-3 bg-[#F1F5F8] rounded-[10px] text-xs text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-[#1473E6]"
@@ -853,7 +853,7 @@ const Landing = () => {
                     </label>
                     <textarea
                       rows="3"
-                      placeholder="Specify approximate monthly volume, multi-currency needs, etc."
+                      placeholder="your_REQUIREMENTS"
                       value={bookingData.notes}
                       onChange={(e) => setBookingData({ ...bookingData, notes: e.target.value })}
                       className="w-full px-4 py-3 bg-[#F1F5F8] rounded-[10px] text-xs text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-[#1473E6]"
