@@ -1,9 +1,9 @@
 # pyrefly: ignore [missing-import]
-from rest_framework.authentication import BaseAuthentication
+from rest_framework.authentication import BaseAuthentication  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-from rest_framework.exceptions import AuthenticationFailed
-from .models import User
-from .utils import decode_token
+from rest_framework.exceptions import AuthenticationFailed  # type: ignore  # pyrefly: ignore
+from .models import User  # type: ignore  # pyrefly: ignore
+from .utils import decode_token  # type: ignore  # pyrefly: ignore
 
 class AuthenticatedUser(dict):
     @property

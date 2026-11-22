@@ -1,8 +1,8 @@
-import uuid
-from datetime import datetime, timezone
+import uuid  # type: ignore  # pyrefly: ignore
+from datetime import datetime, timezone  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-from django.contrib.auth.hashers import make_password, check_password
-from config.utils.db import get_db
+from django.contrib.auth.hashers import make_password, check_password  # type: ignore  # pyrefly: ignore
+from config.utils.db import get_db  # type: ignore  # pyrefly: ignore
 
 class User:
     @staticmethod

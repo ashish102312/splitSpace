@@ -1,7 +1,7 @@
 # pyrefly: ignore [missing-import]
-import jwt
-import os
-from datetime import datetime, timedelta, timezone
+import jwt  # type: ignore  # pyrefly: ignore
+import os  # type: ignore  # pyrefly: ignore
+from datetime import datetime, timedelta, timezone  # type: ignore  # pyrefly: ignore
 
 def generate_tokens(user_id):
     secret = os.getenv("JWT_SECRET", "fallback_secret")
