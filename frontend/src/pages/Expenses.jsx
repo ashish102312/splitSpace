@@ -273,7 +273,7 @@ const Expenses = () => {
                   <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                   <input
                     type="text"
-                    placeholder="Search by title or note..."
+                    placeholder="your_SEARCH_QUERY"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     className="w-full pl-9 pr-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white"
@@ -460,7 +460,7 @@ const Expenses = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g., Organic Grocery Market"
+                  placeholder="your_EXPENSE_TITLE"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white"
@@ -477,7 +477,7 @@ const Expenses = () => {
                     step="0.01"
                     min="0.01"
                     required
-                    placeholder="0.00"
+                    placeholder="your_AMOUNT"
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                     className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white font-semibold"
@@ -536,7 +536,7 @@ const Expenses = () => {
                 </label>
                 <textarea
                   rows="2"
-                  placeholder="Additional context, receipt ID, etc."
+                  placeholder="your_NOTES"
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white"
