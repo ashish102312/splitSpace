@@ -1,14 +1,14 @@
 # pyrefly: ignore [missing-import]
-from fastapi import FastAPI, Request, Response, HTTPException
+from fastapi import FastAPI, Request, Response, HTTPException  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-import httpx
-import os
+import httpx  # type: ignore  # pyrefly: ignore
+import os  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-import uvicorn
+import uvicorn  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore  # pyrefly: ignore
 
 load_dotenv()
 
