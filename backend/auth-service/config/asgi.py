@@ -7,9 +7,9 @@ For more information on this file, see
 https://docs.djangoproject.com/en/6.1/howto/deployment/asgi/
 """
 
-import os
+import os  # type: ignore  # pyrefly: ignore
 
-from django.core.asgi import get_asgi_application
+from django.core.asgi import get_asgi_application  # type: ignore  # pyrefly: ignore
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 

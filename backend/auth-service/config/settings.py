@@ -1,5 +1,5 @@
-import os
-from pathlib import Path
+import os  # type: ignore  # pyrefly: ignore
+from pathlib import Path  # type: ignore  # pyrefly: ignore
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -93,3 +93,5 @@ REST_FRAMEWORK = {
         'authentication.auth_backend.JWTAuthentication',
     ),
 }
+
+APPEND_SLASH = False
