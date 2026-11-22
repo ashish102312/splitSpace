@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ArrowRight, 
-  Receipt, 
-  Users, 
-  BarChart3, 
-  ShieldCheck, 
-  Check, 
-  ChevronRight, 
+import {
+  ArrowRight,
+  Receipt,
+  Users,
+  BarChart3,
+  ShieldCheck,
+  Check,
+  ChevronRight,
   Sparkles,
   ArrowUpRight,
   Clock,
@@ -76,7 +76,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-white text-slate-700 flex flex-col font-['Plus_Jakarta_Sans',sans-serif] selection:bg-emerald-100 selection:text-emerald-900">
-      
+
       {/* 1. UTILITY STRIP & NAVIGATION */}
       {/* Top Tier: Utility Strip */}
       <div className="w-full bg-white border-b border-slate-100 h-10 flex items-center">
@@ -91,8 +91,8 @@ const Landing = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link 
-              to="/login" 
+            <Link
+              to="/login"
               className="text-[#1473E6] hover:text-[#0060A8] font-bold tracking-wider uppercase transition-colors"
             >
               Member Access
@@ -104,7 +104,7 @@ const Landing = () => {
       {/* Bottom Tier: Sticky Navigation */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
         <div className="max-w-[1170px] mx-auto px-6 h-20 flex justify-between items-center">
-          
+
           {/* Logo & Brand Title */}
           <Link to="/" className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-[10px] bg-[#0060A8] flex items-center justify-center text-white font-extrabold text-xl shadow-sm">
@@ -158,7 +158,7 @@ const Landing = () => {
 
         <div className="max-w-[1170px] w-full mx-auto px-6 relative z-10">
           <div className="max-w-2xl text-white space-y-6">
-            
+
             {/* Pill Tag with Backdrop-blur */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-emerald-300 text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4 text-emerald-300" />
@@ -217,7 +217,7 @@ const Landing = () => {
       {/* 3. SERVICES GRID */}
       <section id="services" className="py-20 bg-[#F1F5F8]">
         <div className="max-w-[1170px] mx-auto px-6">
-          
+
           {/* Section Header with Institutional Underline */}
           <div className="mb-14">
             <h2 className="text-[24px] font-bold uppercase tracking-tight text-[#0060A8]">
@@ -231,7 +231,7 @@ const Landing = () => {
 
           {/* 3-Column Grid (28px gap = gap-7) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
-            
+
             {/* Service 1 */}
             <div className="bg-white rounded-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between overflow-hidden group">
               <div className="h-[200px] bg-gradient-to-br from-blue-900 via-[#0060A8] to-emerald-800 p-8 flex flex-col justify-between text-white relative">
@@ -255,8 +255,8 @@ const Landing = () => {
                 </div>
 
                 <div className="pt-6 mt-4 border-t border-slate-100">
-                  <Link 
-                    to="/register" 
+                  <Link
+                    to="/register"
                     className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1473E6] hover:text-[#0060A8] group-hover:gap-3 transition-all"
                   >
                     <span>Learn More</span>
@@ -289,8 +289,8 @@ const Landing = () => {
                 </div>
 
                 <div className="pt-6 mt-4 border-t border-slate-100">
-                  <Link 
-                    to="/register" 
+                  <Link
+                    to="/register"
                     className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1473E6] hover:text-[#0060A8] group-hover:gap-3 transition-all"
                   >
                     <span>Learn More</span>
@@ -323,8 +323,8 @@ const Landing = () => {
                 </div>
 
                 <div className="pt-6 mt-4 border-t border-slate-100">
-                  <Link 
-                    to="/register" 
+                  <Link
+                    to="/register"
                     className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1473E6] hover:text-[#0060A8] group-hover:gap-3 transition-all"
                   >
                     <span>Learn More</span>
@@ -342,7 +342,7 @@ const Landing = () => {
       {/* 4. GALLERY & FEATURED INFO (Split Layout) */}
       <section id="architecture" className="py-20 bg-white">
         <div className="max-w-[1170px] mx-auto px-6">
-          
+
           <div className="mb-14">
             <h2 className="text-[24px] font-bold uppercase tracking-tight text-[#0060A8]">
               Institutional Architecture
@@ -355,10 +355,10 @@ const Landing = () => {
 
           {/* Split Layout: Left Large Box (450px height) + Right Column (350px width) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
+
             {/* Left Box (rounded-16px, 450px height) */}
             <div className="lg:col-span-8 relative h-[450px] rounded-[16px] bg-gradient-to-tr from-[#0060A8] via-[#0066AE] to-slate-900 overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.1)] p-8 md:p-12 flex flex-col justify-between text-white">
-              
+
               <div className="flex items-center justify-between">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-emerald-300 text-xs font-bold uppercase tracking-wider">
                   <Cpu className="w-3.5 h-3.5 text-emerald-400" />
@@ -371,11 +371,10 @@ const Landing = () => {
                     <button
                       key={idx}
                       onClick={() => setActiveTab(idx)}
-                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        activeTab === idx 
-                          ? 'bg-emerald-600 text-white shadow-xs' 
-                          : 'text-slate-200 hover:text-white'
-                      }`}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === idx
+                        ? 'bg-emerald-600 text-white shadow-xs'
+                        : 'text-slate-200 hover:text-white'
+                        }`}
                     >
                       0{idx + 1}
                     </button>
@@ -412,7 +411,7 @@ const Landing = () => {
 
             {/* Right Column: 350px wide equivalent */}
             <div className="lg:col-span-4 space-y-6">
-              
+
               {/* Stacked Value Prop Box with blue left-border (#1473E6) */}
               <div className="bg-[#F1F5F8] rounded-[10px] p-6 border-l-4 border-l-[#1473E6] shadow-[0_1px_3px_rgba(0,0,0,0.1)]">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-[#0060A8]">
@@ -456,7 +455,7 @@ const Landing = () => {
       {/* 5. PRICING & MEMBERSHIP TIERS */}
       <section id="memberships" className="py-20 bg-[#F1F5F8]">
         <div className="max-w-[1170px] mx-auto px-6">
-          
+
           <div className="text-center max-w-xl mx-auto mb-14">
             <h2 className="text-[24px] font-bold uppercase tracking-tight text-[#0060A8]">
               Membership Tiers
@@ -469,7 +468,7 @@ const Landing = () => {
 
           {/* 3 Membership Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-            
+
             {/* Tier 1: Personal */}
             <div className="bg-white rounded-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] border-t-4 border-t-[#1473E6] p-8 flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
               <div>
@@ -514,7 +513,7 @@ const Landing = () => {
 
             {/* Tier 2: Team / Syndicate (POPULAR with Floating Badge) */}
             <div className="bg-white rounded-[10px] shadow-[0_4px_16px_rgba(0,96,168,0.12)] border-t-4 border-t-[#1473E6] p-8 flex flex-col justify-between relative hover:-translate-y-1 transition-all duration-300">
-              
+
               {/* Floating Pill Badge */}
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
                 Recommended Tier
@@ -523,7 +522,7 @@ const Landing = () => {
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#0060A8]">Syndicate Shared</span>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900">₹299</span>
+                  <span className="text-4xl font-extrabold text-slate-900">₹99</span>
                   <span className="text-xs font-semibold text-[#6C6C6C]">/ month</span>
                 </div>
                 <p className="text-xs text-[#6C6C6C] mt-2">
@@ -565,7 +564,7 @@ const Landing = () => {
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#0060A8]">Corporate Guild</span>
                 <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl font-extrabold text-slate-900">₹999</span>
+                  <span className="text-4xl font-extrabold text-slate-900">₹599</span>
                   <span className="text-xs font-semibold text-[#6C6C6C]">/ month</span>
                 </div>
                 <p className="text-xs text-[#6C6C6C] mt-2">
@@ -601,16 +600,14 @@ const Landing = () => {
                 </Link>
               </div>
             </div>
-
           </div>
-
         </div>
       </section>
 
       {/* 6. TESTIMONIALS GRID (Solid #0060A8 Background, 2x2 White Cards) */}
       <section id="testimonials" className="py-20 bg-[#0060A8] text-white">
         <div className="max-w-[1170px] mx-auto px-6">
-          
+
           <div className="mb-14">
             <h2 className="text-[24px] font-bold uppercase tracking-tight text-white">
               Institutional Trust
@@ -623,7 +620,7 @@ const Landing = () => {
 
           {/* 2x2 Grid of 4 White Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
+
             {/* Card 1 */}
             <div className="bg-white rounded-[10px] p-8 shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-slate-800 flex flex-col justify-between">
               <div>
@@ -633,7 +630,7 @@ const Landing = () => {
                   <Star className="w-4 h-4 fill-[#1473E6]" />
                   <Star className="w-4 h-4 fill-[#1473E6]" />
                   <Star className="w-4 h-4 fill-[#1473E6]" />
-                  <Star className="w-4 h-4 fill-[#1473E6]" />
+                  <Star className="w-4 h-4 #1473E6" />
                 </div>
                 <p className="text-sm italic text-black leading-relaxed">
                   "SplitSpace eliminated every single awkward calculation in our 5-person apartment. The debt simplifier collapsed 14 pending payments down to 3 quick transfers."
@@ -641,9 +638,9 @@ const Landing = () => {
               </div>
               <div className="mt-6 pt-4 border-t border-slate-100">
                 <p className="text-xs font-bold text-[#0060A8] uppercase tracking-wider">
-                  Devendra Roy
+                  Arijit
                 </p>
-                <p className="text-[11px] text-[#6C6C6C]">Shared Flat Coordinator, Bangalore</p>
+                <p className="text-[11px] text-[#6C6C6C]">Shared Flat Coordinator, Punjab</p>
               </div>
             </div>
 
@@ -663,7 +660,7 @@ const Landing = () => {
               </div>
               <div className="mt-6 pt-4 border-t border-slate-100">
                 <p className="text-xs font-bold text-[#0060A8] uppercase tracking-wider">
-                  Rohan Malhotra
+                  Ashish Bhardwaj
                 </p>
                 <p className="text-[11px] text-[#6C6C6C]">Systems Engineer & Group Traveler</p>
               </div>
@@ -685,7 +682,7 @@ const Landing = () => {
               </div>
               <div className="mt-6 pt-4 border-t border-slate-100">
                 <p className="text-xs font-bold text-[#0060A8] uppercase tracking-wider">
-                  Priya Swaminathan
+                  Urvashi
                 </p>
                 <p className="text-[11px] text-[#6C6C6C]">Financial Auditor</p>
               </div>
@@ -699,7 +696,7 @@ const Landing = () => {
                   <Star className="w-4 h-4 fill-[#1473E6]" />
                   <Star className="w-4 h-4 fill-[#1473E6]" />
                   <Star className="w-4 h-4 fill-[#1473E6]" />
-                  <Star className="w-4 h-4 fill-[#1473E6]" />
+                  <Star className="w-4 h-4 1/2-[#1473E6]" />
                 </div>
                 <p className="text-sm italic text-black leading-relaxed">
                   "Our Goa trip with 9 people would have taken days to reconcile. With SplitSpace, everyone keyed in their receipts, and the balance sheet settled within minutes."
@@ -707,7 +704,7 @@ const Landing = () => {
               </div>
               <div className="mt-6 pt-4 border-t border-slate-100">
                 <p className="text-xs font-bold text-[#0060A8] uppercase tracking-wider">
-                  Tanmay Joshi
+                  Ashish Bhardwaj
                 </p>
                 <p className="text-[11px] text-[#6C6C6C]">Product Strategist</p>
               </div>
@@ -721,9 +718,9 @@ const Landing = () => {
       {/* 7. BOOKING & CONSULTATION FORM (Two-Column on White) */}
       <section id="consultation" className="py-20 bg-white">
         <div className="max-w-[1170px] mx-auto px-6">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
+
             {/* Left Column: Title with #1473E6 underline and contact metadata */}
             <div className="lg:col-span-5 space-y-6">
               <div>
@@ -744,7 +741,7 @@ const Landing = () => {
                   </div>
                   <div>
                     <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Institutional Email</span>
-                    <span className="font-semibold text-slate-800">institutional@splitspace.io</span>
+                    <span className="font-semibold text-slate-800">sparkhit69@gmail.com</span>
                   </div>
                 </div>
 
@@ -754,7 +751,7 @@ const Landing = () => {
                   </div>
                   <div>
                     <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Desk Support</span>
-                    <span className="font-semibold text-slate-800">+91 (80) 4122-9080</span>
+                    <span className="font-semibold text-slate-800">+91 7814607949</span>
                   </div>
                 </div>
 
@@ -764,7 +761,7 @@ const Landing = () => {
                   </div>
                   <div>
                     <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Headquarters</span>
-                    <span className="font-semibold text-slate-800">Koramangala Financial District, Bengaluru</span>
+                    <span className="font-semibold text-slate-800"> LPU Jalandhar, Punjab</span>
                   </div>
                 </div>
               </div>
@@ -772,7 +769,7 @@ const Landing = () => {
 
             {/* Right Column: Form with inputs (10px radius, #F1F5F8 bg, no borders) */}
             <div className="lg:col-span-7 bg-white p-8 rounded-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] border border-slate-100">
-              
+
               {bookingSubmitted ? (
                 <div className="py-12 text-center space-y-3">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
@@ -785,7 +782,7 @@ const Landing = () => {
                 </div>
               ) : (
                 <form onSubmit={handleBookingSubmit} className="space-y-4">
-                  
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[10px] font-bold uppercase tracking-wider text-[#6C6C6C] mb-1.5">
@@ -794,7 +791,7 @@ const Landing = () => {
                       <input
                         type="text"
                         required
-                        placeholder="Alex Morgan"
+                        placeholder="your name"
                         value={bookingData.name}
                         onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
                         className="w-full px-4 py-3 bg-[#F1F5F8] rounded-[10px] text-xs text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-[#1473E6]"
@@ -808,7 +805,7 @@ const Landing = () => {
                       <input
                         type="email"
                         required
-                        placeholder="alex@organization.com"
+                        placeholder="Your_Email@organization.com"
                         value={bookingData.email}
                         onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
                         className="w-full px-4 py-3 bg-[#F1F5F8] rounded-[10px] text-xs text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-[#1473E6]"
@@ -886,12 +883,13 @@ const Landing = () => {
       {/* 8. FOOTER (Deep Navy #031120, 4-Column Layout, #9CA3AF Text) */}
       <footer className="bg-[#031120] text-[#9CA3AF] pt-16 pb-8 border-t border-white/10">
         <div className="max-w-[1170px] mx-auto px-6">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12">
-            
+
             {/* Column 1: Brand / Logo */}
             <div className="space-y-4">
               <div className="flex items-center gap-2.5">
+                {/* this for s in the sysmbol */}
                 <div className="w-8 h-8 rounded-[8px] bg-[#0060A8] flex items-center justify-center text-white font-extrabold text-sm">
                   S
                 </div>
@@ -931,15 +929,15 @@ const Landing = () => {
               <ul className="space-y-2 text-xs">
                 <li className="flex items-center gap-2">
                   <Mail className="w-3.5 h-3.5 text-[#1473E6]" />
-                  <span>support@splitspace.io</span>
+                  <span>For now : sparkhit69@gmail.com</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone className="w-3.5 h-3.5 text-[#1473E6]" />
-                  <span>+91 (80) 4122-9080</span>
+                  <span>+91 7814607949</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-[#1473E6]" />
-                  <span>Koramangala, Bengaluru</span>
+                  <span>Jalandhar, Punjab</span>
                 </li>
               </ul>
             </div>
@@ -953,16 +951,16 @@ const Landing = () => {
                 Connect with our engineering status page and active GitHub repository.
               </p>
               <div className="flex items-center gap-3">
-                <a 
-                  href="https://github.com" 
-                  target="_blank" 
+                <a
+                  href="https://github.com/ashish102312?tab=overview&from=2026-10-01&to=2026-10-31"
+                  target="_blank"
                   rel="noreferrer"
                   className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-semibold transition-colors"
                 >
                   GitHub
                 </a>
-                <a 
-                  href="#services" 
+                <a
+                  href="#services"
                   className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-semibold transition-colors"
                 >
                   Status
