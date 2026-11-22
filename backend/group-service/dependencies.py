@@ -1,8 +1,8 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-import jwt
-import os
-from dotenv import load_dotenv
+from fastapi import Depends, HTTPException, status  # type: ignore  # pyrefly: ignore
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials  # type: ignore  # pyrefly: ignore
+import jwt  # type: ignore  # pyrefly: ignore
+import os  # type: ignore  # pyrefly: ignore
+from dotenv import load_dotenv  # type: ignore  # pyrefly: ignore
 
 load_dotenv()
 

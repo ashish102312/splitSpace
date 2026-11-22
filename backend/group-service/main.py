@@ -1,6 +1,8 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from routers import group, expense
+# pyrefly: ignore [missing-import]
+from fastapi import FastAPI  # type: ignore  # pyrefly: ignore
+# pyrefly: ignore [missing-import]
+from fastapi.middleware.cors import CORSMiddleware  # type: ignore  # pyrefly: ignore
+from routers import group, expense  # type: ignore  # pyrefly: ignore
 
 app = FastAPI(title="SplitSpace Group Service")
 

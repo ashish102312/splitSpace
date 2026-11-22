@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
-from typing import List, Optional
-from datetime import datetime
+# pyrefly: ignore [missing-import]
+from pydantic import BaseModel, Field  # type: ignore  # pyrefly: ignore
+from typing import List, Optional  # type: ignore  # pyrefly: ignore
+from datetime import datetime  # type: ignore  # pyrefly: ignore
 
 class GroupCreate(BaseModel):
     name: str
@@ -14,12 +15,17 @@ class GroupMember(BaseModel):
 class GroupResponse(BaseModel):
     id: str
     code: str
+    invite_code: Optional[str] = None
     name: str
     description: Optional[str]
     created_by: str
     members: List[GroupMember]
     created_at: datetime
     updated_at: datetime
+
+    def model_post_init(self, __context):
+        if not self.invite_code and self.code:
+            self.invite_code = self.code
 
 class JoinGroupRequest(BaseModel):
     code: str

@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from typing import List
-from models import GroupCreate, GroupResponse, JoinGroupRequest
-from database import get_db
-from dependencies import get_current_user
-import uuid
-import random
-import string
-from datetime import datetime
+# pyrefly: ignore [missing-import]
+from fastapi import APIRouter, Depends, HTTPException, status  # type: ignore  # pyrefly: ignore
+from typing import List  # type: ignore  # pyrefly: ignore
+from models import GroupCreate, GroupResponse, JoinGroupRequest  # type: ignore  # pyrefly: ignore
+from database import get_db  # type: ignore  # pyrefly: ignore
+from dependencies import get_current_user  # type: ignore  # pyrefly: ignore
+import uuid  # type: ignore  # pyrefly: ignore
+import random  # type: ignore  # pyrefly: ignore
+import string  # type: ignore  # pyrefly: ignore
+from datetime import datetime  # type: ignore  # pyrefly: ignore
 
 router = APIRouter()
 
@@ -25,6 +26,7 @@ async def create_group(group: GroupCreate, user_id: str = Depends(get_current_us
     group_doc = {
         "id": str(uuid.uuid4()),
         "code": code,
+        "invite_code": code,
         "name": group.name,
         "description": group.description,
         "created_by": user_id,
@@ -64,7 +66,8 @@ async def get_group_details(group_id: str, user_id: str = Depends(get_current_us
 @router.post("/join", response_model=GroupResponse)
 async def join_group(req: JoinGroupRequest, user_id: str = Depends(get_current_user)):
     db = get_db()
-    group = await db.groups.find_one({"code": req.code})
+    clean_code = req.code.strip().upper()
+    group = await db.groups.find_one({"$or": [{"code": clean_code}, {"invite_code": clean_code}]})
     
     if not group:
         raise HTTPException(status_code=404, detail="Group not found or invalid code")

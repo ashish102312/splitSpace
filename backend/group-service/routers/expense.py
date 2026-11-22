@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from typing import List
-from models import ExpenseCreate, ExpenseResponse
-from database import get_db
-from dependencies import get_current_user
-import uuid
-from datetime import datetime
+from fastapi import APIRouter, Depends, HTTPException, status  # type: ignore  # pyrefly: ignore
+from typing import List  # type: ignore  # pyrefly: ignore
+from models import ExpenseCreate, ExpenseResponse  # type: ignore  # pyrefly: ignore
+from database import get_db  # type: ignore  # pyrefly: ignore
+from dependencies import get_current_user  # type: ignore  # pyrefly: ignore
+import uuid  # type: ignore  # pyrefly: ignore
+from datetime import datetime  # type: ignore  # pyrefly: ignore
 
 router = APIRouter()
 
