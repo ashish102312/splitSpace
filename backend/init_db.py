@@ -1,8 +1,8 @@
-import os
+import os  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-from pymongo import MongoClient
+from pymongo import MongoClient  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore  # pyrefly: ignore
 
 load_dotenv()
 

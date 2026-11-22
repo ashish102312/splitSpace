@@ -1,4 +1,4 @@
-import requests
+import requests  # type: ignore  # pyrefly: ignore
 
 BASE_URL = "http://localhost:8000/api"
 
