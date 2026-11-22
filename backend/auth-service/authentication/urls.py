@@ -1,15 +1,16 @@
-from django.urls import path
-from .views import (
+from django.urls import path, re_path  # type: ignore  # pyrefly: ignore
+from .views import (  # type: ignore  # pyrefly: ignore
     RegisterView, LoginView, RefreshTokenView, 
     MeView, UpdateProfileView, ChangePasswordView, LogoutView
 )
 
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name='register'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('token/refresh/', RefreshTokenView.as_view(), name='token_refresh'),
-    path('me/', MeView.as_view(), name='me'),
-    path('profile/', UpdateProfileView.as_view(), name='update_profile'),
-    path('change-password/', ChangePasswordView.as_view(), name='change_password'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    re_path(r'^register/?$', RegisterView.as_view(), name='register'),
+    re_path(r'^login/?$', LoginView.as_view(), name='login'),
+    re_path(r'^refresh/?$', RefreshTokenView.as_view(), name='refresh'),
+    re_path(r'^token/refresh/?$', RefreshTokenView.as_view(), name='token_refresh'),
+    re_path(r'^me/?$', MeView.as_view(), name='me'),
+    re_path(r'^profile/?$', UpdateProfileView.as_view(), name='update_profile'),
+    re_path(r'^change-password/?$', ChangePasswordView.as_view(), name='change_password'),
+    re_path(r'^logout/?$', LogoutView.as_view(), name='logout'),
 ]
