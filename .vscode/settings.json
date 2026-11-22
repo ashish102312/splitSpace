@@ -1,12 +1,15 @@
 {
     "python.defaultInterpreterPath": "backend/auth-service/venv/bin/python",
     "python.analysis.extraPaths": [
-        "backend/api-gateway/venv/lib/python3.14/site-packages",
-        "backend/group-service/venv/lib/python3.14/site-packages",
-        "backend/expense-service/venv/lib/python3.14/site-packages"
+        "backend/auth-service/venv/lib/python3.14/site-packages",
+        "backend/expense-service/venv/lib/python3.14/site-packages",
+        "backend/auth-service",
+        "backend/group-service",
+        "backend/expense-service",
+        "backend/api-gateway"
     ],
-    "python.linting.mypyEnabled": true,
+    "python.linting.mypyEnabled": false,
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": false,
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "off"
 }
