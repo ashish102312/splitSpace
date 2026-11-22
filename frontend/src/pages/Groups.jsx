@@ -152,7 +152,7 @@ const Groups = () => {
               <Search className="w-4 h-4 text-slate-400 pl-0.5" />
               <input
                 type="text"
-                placeholder="Search spaces by name, description, or invite code..."
+                placeholder="your_SEARCH_QUERY"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full text-sm text-slate-900 placeholder:text-slate-400 focus:outline-hidden"
@@ -271,7 +271,7 @@ const Groups = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g., Lake Tahoe Trip 2026, Flat 402"
+                  placeholder="your_SPACE_NAME"
                   value={createName}
                   onChange={(e) => setCreateName(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white"
@@ -284,7 +284,7 @@ const Groups = () => {
                 </label>
                 <textarea
                   rows="3"
-                  placeholder="e.g., Shared rent, utilities, and grocery supplies."
+                  placeholder="your_SPACE_DESCRIPTION"
                   value={createDesc}
                   onChange={(e) => setCreateDesc(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white"
@@ -334,7 +334,7 @@ const Groups = () => {
                   type="text"
                   required
                   maxLength={6}
-                  placeholder="e.g., X8K9Q2"
+                  placeholder="your_INVITE_CODE"
                   value={joinCode}
                   onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono tracking-widest text-center uppercase focus:outline-hidden focus:ring-2 focus:ring-emerald-500 focus:bg-white font-bold"
