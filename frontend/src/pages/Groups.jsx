@@ -82,11 +82,14 @@ const Groups = () => {
     setTimeout(() => setCopiedCode(null), 2000);
   };
 
-  const filteredGroups = groups.filter(g => 
-    g.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    g.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    g.invite_code?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredGroups = groups.filter(g => {
+    const code = g.code || g.invite_code || '';
+    return (
+      g.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      g.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      code.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
@@ -187,55 +190,58 @@ const Groups = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {filteredGroups.map((group) => (
-                  <Link
-                    key={group.id}
-                    to={`/groups/${group.id}`}
-                    className="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs hover:border-blue-400 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-emerald-50 text-blue-700 border border-blue-100/80 flex items-center justify-center font-extrabold text-base group-hover:scale-105 transition-transform">
-                          {group.name ? group.name.charAt(0).toUpperCase() : 'G'}
+                {filteredGroups.map((group) => {
+                  const displayCode = group.code || group.invite_code || 'CODE';
+                  return (
+                    <Link
+                      key={group.id}
+                      to={`/groups/${group.id}`}
+                      className="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-xs hover:border-blue-400 hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-emerald-50 text-blue-700 border border-blue-100/80 flex items-center justify-center font-extrabold text-base group-hover:scale-105 transition-transform">
+                            {group.name ? group.name.charAt(0).toUpperCase() : 'G'}
+                          </div>
+                          <button
+                            onClick={(e) => copyToClipboard(displayCode, e)}
+                            title="Copy 6-char Invite Code"
+                            className="px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200/60 text-[11px] font-mono text-slate-600 flex items-center gap-1.5 transition-colors"
+                          >
+                            {copiedCode === displayCode ? (
+                              <>
+                                <Check className="w-3 h-3 text-emerald-600" />
+                                <span className="text-emerald-700 font-semibold">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3 h-3 text-slate-400" />
+                                <span>{displayCode}</span>
+                              </>
+                            )}
+                          </button>
                         </div>
-                        <button
-                          onClick={(e) => copyToClipboard(group.invite_code, e)}
-                          title="Copy 6-char Invite Code"
-                          className="px-2.5 py-1 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200/60 text-[11px] font-mono text-slate-600 flex items-center gap-1.5 transition-colors"
-                        >
-                          {copiedCode === group.invite_code ? (
-                            <>
-                              <Check className="w-3 h-3 text-emerald-600" />
-                              <span className="text-emerald-700 font-semibold">Copied</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3 h-3 text-slate-400" />
-                              <span>{group.invite_code}</span>
-                            </>
-                          )}
-                        </button>
+
+                        <h3 className="text-lg font-bold text-slate-900 mt-4 group-hover:text-blue-600 transition-colors">
+                          {group.name}
+                        </h3>
+                        <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+                          {group.description || 'Shared multi-party balance tracking space.'}
+                        </p>
                       </div>
 
-                      <h3 className="text-lg font-bold text-slate-900 mt-4 group-hover:text-blue-600 transition-colors">
-                        {group.name}
-                      </h3>
-                      <p className="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
-                        {group.description || 'Shared multi-party balance tracking space.'}
-                      </p>
-                    </div>
-
-                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                      <span className="flex items-center gap-1 font-medium">
-                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                        Greedy Settlement
-                      </span>
-                      <span className="text-blue-600 font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                        Open Space <ChevronRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+                      <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span className="flex items-center gap-1 font-medium">
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                          Greedy Settlement
+                        </span>
+                        <span className="text-blue-600 font-semibold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                          Open Space <ChevronRight className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             )}
 

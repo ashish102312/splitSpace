@@ -295,7 +295,7 @@ const Dashboard = () => {
 
                         <div className="flex items-center gap-2 pl-2">
                           <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 text-[11px] font-mono font-medium">
-                            {g.invite_code || 'CODE'}
+                            {g.code || g.invite_code || 'CODE'}
                           </span>
                           <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
                         </div>
