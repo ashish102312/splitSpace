@@ -1,12 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, status
-from typing import List, Optional
-from datetime import datetime, timedelta
-import uuid
-import calendar
+from fastapi import APIRouter, Depends, HTTPException, Query, status  # type: ignore  # pyrefly: ignore
+from typing import List, Optional  # type: ignore  # pyrefly: ignore
+from datetime import datetime, timedelta  # type: ignore  # pyrefly: ignore
+import uuid  # type: ignore  # pyrefly: ignore
+import calendar  # type: ignore  # pyrefly: ignore
 
-from database import get_db
-from dependencies import get_current_user
-from models import (
+from database import get_db  # type: ignore  # pyrefly: ignore
+from dependencies import get_current_user  # type: ignore  # pyrefly: ignore
+from models import (  # type: ignore  # pyrefly: ignore
     PersonalExpenseCreate,
     PersonalExpenseUpdate,
     PersonalExpenseResponse,

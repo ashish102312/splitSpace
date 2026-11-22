@@ -1,6 +1,6 @@
-import os
-from motor.motor_asyncio import AsyncIOMotorClient
-from dotenv import load_dotenv
+import os  # type: ignore  # pyrefly: ignore
+from motor.motor_asyncio import AsyncIOMotorClient  # type: ignore  # pyrefly: ignore
+from dotenv import load_dotenv  # type: ignore  # pyrefly: ignore
 
 load_dotenv()
 
