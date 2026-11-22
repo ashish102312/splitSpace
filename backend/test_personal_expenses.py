@@ -1,9 +1,9 @@
-import sys
-import time
-import uuid
+import sys  # type: ignore  # pyrefly: ignore
+import time  # type: ignore  # pyrefly: ignore
+import uuid  # type: ignore  # pyrefly: ignore
 # pyrefly: ignore [missing-import]
-import jwt
-import requests
+import jwt  # type: ignore  # pyrefly: ignore
+import requests  # type: ignore  # pyrefly: ignore
 
 # Test configuration
 SECRET_KEY = "supersecretjwtkey_replace_me_in_production"

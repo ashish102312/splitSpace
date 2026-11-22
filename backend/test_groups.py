@@ -1,6 +1,6 @@
-import requests
-import json
-import uuid
+import requests  # type: ignore  # pyrefly: ignore
+import json  # type: ignore  # pyrefly: ignore
+import uuid  # type: ignore  # pyrefly: ignore
 
 BASE_URL = "http://localhost:8000/api"
 
