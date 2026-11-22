@@ -462,7 +462,7 @@ const GroupDetails = () => {
                 <input
                   type="text"
                   required
-                  placeholder="e.g., Airbnb stay, Dinner & drinks"
+                  placeholder="your_EXPENSE_DESCRIPTION"
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white"
@@ -478,7 +478,7 @@ const GroupDetails = () => {
                   step="0.01"
                   min="0.01"
                   required
-                  placeholder="0.00"
+                  placeholder="your_TOTAL_AMOUNT"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white font-semibold"
